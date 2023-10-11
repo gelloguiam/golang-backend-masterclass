@@ -1,0 +1,40 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table account as A {
+  id bigserial [pk]
+  owner varchar [not null]
+  balance bigint [not null]
+  currency varchar [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    owner
+  }
+}
+
+Table entries as E {
+  id bigserial [pk]
+  account_id bigint [ref: > A.id]
+  amount bigint
+  created_at timestamp
+
+  Indexes {
+    account_id
+  }
+}
+
+Table transfers as T {
+  id bigserial [pk]
+  from_account_id bigint [ref: > A.id]
+  to_account_id bigint [ref: > A.id]
+  amount bigint
+  created_at timestamp
+
+  Indexes {
+    from_account_id
+    to_account_id
+    (from_account_id, to_account_id)
+  }
+}
+
