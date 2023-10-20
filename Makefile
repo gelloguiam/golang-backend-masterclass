@@ -16,7 +16,10 @@ dropdb:
 migrate:
 	migrate -path db/migration -database "postgresql://postgres:password@localhost:5499/simple_bank?sslmode=disable" -verbose up
 
-sqlc: 
+sqlc:
 	sqlc generate
 
-.PHONY: postgres-run, postgres-start, postgres-rm, createdb, dropdb, migrate, sqlc
+test:
+	go test -v -count=30 -cover ./...
+
+.PHONY: postgres-run, postgres-start, postgres-rm, createdb, dropdb, migrate, sqlc, test
