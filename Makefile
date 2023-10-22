@@ -1,3 +1,11 @@
+init:
+	docker stop postgres12
+	docker rm postgres12
+	make postgres-run
+	sleep 1
+	make createdb
+	make migrate
+
 postgres-run:
 	docker run --name postgres12 -p 5499:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -d postgres:12-alpine
 
@@ -22,4 +30,4 @@ sqlc:
 test:
 	go test -v -count=30 -cover ./...
 
-.PHONY: postgres-run, postgres-start, postgres-rm, createdb, dropdb, migrate, sqlc, test
+.PHONY: init, postgres-run, postgres-start, postgres-rm, createdb, dropdb, migrate, sqlc, test
