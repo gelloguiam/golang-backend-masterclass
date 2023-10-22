@@ -12,7 +12,7 @@ import (
 func createRandomAccount(t *testing.T) Account {
 	arg := CreateAccountParams{
 		Owner:    util.RandomOwner(),
-		Balance:  util.RandomMoney(),
+		Balance:  util.RandomMoney() + 10,
 		Currency: util.RandomCurrency(),
 	}
 
